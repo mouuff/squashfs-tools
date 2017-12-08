@@ -64,7 +64,12 @@ char *file_data;
 char *data;
 unsigned int block_size;
 unsigned int block_log;
+<<<<<<< HEAD
 int lsonly = FALSE, info = FALSE, force = FALSE, short_ls = TRUE, xattr_ls = FALSE;
+=======
+int lsonly = FALSE, info = FALSE, force = FALSE, short_ls = TRUE;
+int numeric_uid_gid = FALSE;
+>>>>>>> uidgid
 int use_regex = FALSE;
 char **created_inode;
 int root_process;
@@ -541,8 +546,8 @@ int print_filename(char *pathname, struct inode *inode)
 	char str[11], dummy[12], dummy2[12]; /* overflow safe */
 	char *userstr, *groupstr;
 	int padchars;
-	struct passwd *user;
-	struct group *group;
+	struct passwd *user = NULL;
+	struct group *group = NULL;
 	struct tm *t;
 
 	if (xattr_ls) {
@@ -554,7 +559,8 @@ int print_filename(char *pathname, struct inode *inode)
 		return 1;
 	}
 
-	user = getpwuid(inode->uid);
+  if (!numeric_uid_gid)
+		user = getpwuid(inode->uid);
 	if(user == NULL) {
 		int res = snprintf(dummy, 12, "%d", inode->uid);
 		if(res < 0)
@@ -568,7 +574,12 @@ int print_filename(char *pathname, struct inode *inode)
 	} else
 		userstr = user->pw_name;
 
+<<<<<<< HEAD
 	group = getgrgid(inode->gid);
+=======
+	if (!numeric_uid_gid)
+		group = getgrgid(inode->gid);
+>>>>>>> uidgid
 	if(group == NULL) {
 		int res = snprintf(dummy2, 12, "%d", inode->gid);
 		if(res < 0)
@@ -2641,11 +2652,19 @@ int main(int argc, char *argv[])
 				strcmp(argv[i], "-ll") == 0) {
 			lsonly = TRUE;
 			short_ls = FALSE;
+<<<<<<< HEAD
 		} else if(strcmp(argv[i], "-llxattr") == 0 ||
 				strcmp(argv[i], "-llx") == 0) {
 			lsonly = TRUE;
 			short_ls = FALSE;
 			xattr_ls = TRUE;
+=======
+		} else if(strcmp(argv[i], "-lln") == 0 ||
+				strcmp(argv[i], "-llnumeric-uid-gid") == 0) {
+			lsonly = TRUE;
+      numeric_uid_gid = TRUE;
+			short_ls = FALSE;
+>>>>>>> uidgid
 		} else if(strcmp(argv[i], "-linfo") == 0 ||
 				strcmp(argv[i], "-li") == 0) {
 			info = TRUE;
@@ -2710,8 +2729,13 @@ options:
 			ERROR("\t-ll[s]\t\t\tlist filesystem with file "
 				"attributes (like\n");
 			ERROR("\t\t\t\tls -l output), but don't unsquash\n");
+<<<<<<< HEAD
 			ERROR("\t-llx[attr]\t\tsame as -ll but with file extended "
 				"attributes (xattr)\n");
+=======
+      ERROR("\t-lln[umeric_uid_gid]\tlike -ll[s], but list numeric user and group IDs "
+        "\n");
+>>>>>>> uidgid
 			ERROR("\t-f[orce]\t\tif file already exists then "
 				"overwrite\n");
 			ERROR("\t-s[tat]\t\t\tdisplay filesystem superblock "
