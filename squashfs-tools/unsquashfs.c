@@ -556,7 +556,7 @@ int print_filename(char *pathname, struct inode *inode)
 		return 1;
 	}
 
-  if (!numeric_uid_gid)
+  	if(!numeric_uid_gid)
 		user = getpwuid(inode->uid);
 	if(user == NULL) {
 		int res = snprintf(dummy, 12, "%d", inode->uid);
@@ -571,7 +571,7 @@ int print_filename(char *pathname, struct inode *inode)
 	} else
 		userstr = user->pw_name;
 
-	if (!numeric_uid_gid)
+	if(!numeric_uid_gid)
 		group = getgrgid(inode->gid);
 	if(group == NULL) {
 		int res = snprintf(dummy2, 12, "%d", inode->gid);
@@ -2653,7 +2653,7 @@ int main(int argc, char *argv[])
 		} else if(strcmp(argv[i], "-lln") == 0 ||
 				strcmp(argv[i], "-llnumeric-uid-gid") == 0) {
 			lsonly = TRUE;
-      numeric_uid_gid = TRUE;
+			numeric_uid_gid = TRUE;
 			short_ls = FALSE;
 		} else if(strcmp(argv[i], "-linfo") == 0 ||
 				strcmp(argv[i], "-li") == 0) {
@@ -2721,8 +2721,8 @@ options:
 			ERROR("\t\t\t\tls -l output), but don't unsquash\n");
 			ERROR("\t-llx[attr]\t\tsame as -ll but with file extended "
 				"attributes (xattr)\n");
-      ERROR("\t-lln[umeric_uid_gid]\tlike -ll[s], but list numeric user and group IDs "
-        "\n");
+			ERROR("\t-lln[umeric_uid_gid]\tlike -ll[s], but list numeric user and group IDs "
+			      "\n");
 			ERROR("\t-f[orce]\t\tif file already exists then "
 				"overwrite\n");
 			ERROR("\t-s[tat]\t\t\tdisplay filesystem superblock "
